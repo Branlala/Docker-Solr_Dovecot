@@ -1,0 +1,4 @@
+# Optimize should be run somewhat rarely, e.g. once a day at 2:30 am
+30 2 * * * curl http://localhost:8983/solr/update?optimize=true
+# Commit should be run pretty often, e.g. every minute
+*/1 * * * * curl http://localhost:8983/solr/update?commit=true
