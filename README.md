@@ -72,3 +72,12 @@ Finaly, run :
 ```
 # service dovecot restart
 ```
+
+## Optional
+
+You can force Dovecot to reindex you mail using Solr with the following commands :
+
+```
+# doveadm fts rescan -u <user>
+# doveadm index -u <user> '*'
+```
