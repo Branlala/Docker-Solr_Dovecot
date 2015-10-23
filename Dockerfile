@@ -13,7 +13,9 @@ RUN tar -C /opt --extract --file /opt/solr-4.10.4.tgz
 RUN cp -R /opt/solr-4.10.4/example/* /opt/solr/
 RUN mv /opt/solr/solr/collection1/conf/schema.xml opt/solr/solr/collection1/conf/schema.xml-dist
 RUN wget https://raw.githubusercontent.com/extremeshok/solr-dovecot2/master/schema.xml -O /opt/solr/solr/collection1/conf/schema.xml
-COPY cron.txt /tmp
-RUN /tmp/cron.txt /etc/cron.d/solr
+RUN echo "# Optimize should be run somewhat rarely, e.g. once a day at 2:30 am" > /etc/cron.d/solr 
+RUN echo "30 2 * * * curl http://localhost:8983/solr/update?optimize=true" >> /etc/cron.d/solr 
+RUN echo "# Commit should be run pretty often, e.g. every minute" >> /etc/cron.d/solr
+RUN echo "*/1 * * * * curl http://localhost:8983/solr/update?commit=true" >> /etc/cron.d/solr
 EXPOSE 8983
 CMD ["/bin/bash", "-c", "cd /opt/solr; java -jar start.jar"]
