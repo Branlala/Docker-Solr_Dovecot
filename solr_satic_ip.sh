@@ -13,8 +13,8 @@
 # set for instance "listen 127.0.0.1:80" instead of "listen *:80"
 
 # docker & network settings
-DOCKER_IMAGE_NAME="cozy/full"                 # build of nginx-php - for example
-DOCKER_CONTAINERS_NAME="cozy_bridged"                  # our container's name
+DOCKER_IMAGE_NAME="mrraph/docker-solr_dovecot"                 # build of nginx-php - for example
+DOCKER_CONTAINERS_NAME="solr_dovecot_bridged"                  # our container's name
 DOCKER_NETWORK_INTERFACE_NAME="em1:1"                  # default we have eth0 (or p2p1), so interface will eth0:1 or p2p1:1
 DOCKER_NETWORK_INTERFACE_IP="10.0.0.1"                  # network interface address
 
@@ -33,7 +33,7 @@ if [ ! -z "$found_container" ]; then
   sudo docker start "$DOCKER_CONTAINERS_NAME"
 else
   # bind docker container to created network interface
-  sudo docker run -d --name="$DOCKER_CONTAINERS_NAME" -p $DOCKER_NETWORK_INTERFACE_IP:8880:80/tcp $DOCKER_IMAGE_NAME
+  sudo docker run -d --name="$DOCKER_CONTAINERS_NAME" -p $DOCKER_NETWORK_INTERFACE_IP:8983:8983/tcp $DOCKER_IMAGE_NAME
 fi
 
 # also you can manually remove created virtual network interface
